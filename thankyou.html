@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Request Submitted — Global Grocery Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green:       #1B5E20;
+    --green-mid:   #2E7D32;
+    --green-light: #43A047;
+    --green-pale:  #E8F5E9;
+    --orange:      #E65100;
+    --gold:        #F9A825;
+    --white:       #FFFFFF;
+    --off-white:   #FAFAF8;
+    --dark:        #1A1A1A;
+    --text:        #2D2D2D;
+    --grey:        #6B7280;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  header {
+    background: white;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    padding: 0 24px;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 38px; height: 38px;
+    background: var(--green);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--green);
+  }
+  .logo-text span { color: var(--orange); }
+  .header-right { font-size: 13px; color: var(--grey); }
+  .header-right a { color: var(--green-mid); text-decoration: none; font-weight: 600; }
+
+  /* MAIN */
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+  }
+  .confirmation-card {
+    background: white;
+    border-radius: 24px;
+    padding: 60px 48px;
+    max-width: 620px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    animation: fadeUp .6s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .success-icon {
+    width: 90px;
+    height: 90px;
+    background: var(--green-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-size: 42px;
+    animation: popIn .5s .3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes popIn {
+    from { transform: scale(0); }
+    to   { transform: scale(1); }
+  }
+
+  .confirmation-tag {
+    display: inline-block;
+    background: var(--green-pale);
+    color: var(--green-mid);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .confirmation-card > p {
+    font-size: 16px;
+    color: var(--grey);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .case-ref {
+    background: var(--green-pale);
+    border: 1px solid #C8E6C9;
+    border-radius: 14px;
+    padding: 20px 28px;
+    margin-bottom: 32px;
+    text-align: left;
+  }
+  .case-ref-label { font-size: 12px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .case-ref-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--green-mid);
+    letter-spacing: 1px;
+  }
+  .case-ref-note { font-size: 12px; color: var(--grey); margin-top: 4px; }
+
+  .what-next {
+    text-align: left;
+    margin-bottom: 36px;
+  }
+  .what-next h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+  .next-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    background: var(--green);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-text strong { display: block; font-size: 14px; color: var(--dark); margin-bottom: 2px; }
+  .step-text span { font-size: 13px; color: var(--grey); line-height: 1.5; }
+
+  .sla-banner {
+    background: linear-gradient(135deg, #0D2B45, #1565C0);
+    border-radius: 14px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+    text-align: left;
+  }
+  .sla-icon { font-size: 28px; flex-shrink: 0; }
+  .sla-text strong { display: block; font-size: 14px; color: white; margin-bottom: 2px; }
+  .sla-text span { font-size: 12px; color: rgba(255,255,255,0.75); }
+
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    flex: 1;
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background .2s, transform .2s;
+  }
+  .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); }
+  .btn-secondary {
+    flex: 1;
+    background: white;
+    color: var(--text);
+    border: 2px solid #E5E7EB;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: border-color .2s, transform .2s;
+  }
+  .btn-secondary:hover { border-color: var(--green-light); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: #0D1F0D;
+    padding: 20px 24px;
+    text-align: center;
+  }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.4); }
+  footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">🛒</div>
+      <div class="logo-text">Global<span>Grocery</span></div>
+    </a>
+    <div class="header-right">
+      Need help? <a href="support.html">Visit Support Centre</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="confirmation-card">
+    <div class="success-icon">✅</div>
+    <div class="confirmation-tag">Request Received</div>
+    <h1>Your request has been submitted!</h1>
+    <p>Thank you for reaching out to Global Grocery Support. We have received your request and a member of our team will be in touch with you shortly.</p>
+
+    <div class="case-ref">
+      <div class="case-ref-label">Your Case Reference</div>
+      <div class="case-ref-number">GG-CASE-00001</div>
+      <div class="case-ref-note">Please save this reference number for tracking your request</div>
+    </div>
+
+    <div class="what-next">
+      <h3>What happens next?</h3>
+      <div class="next-step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>Confirmation Email Sent</strong>
+          <span>You will receive a confirmation email at the address you provided with your case details.</span>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>Case Assigned to the Right Team</strong>
+          <span>Your request has been automatically routed to the team best suited to resolve your issue.</span>
+        </div>
+      </div>
+      <div class="next-step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>We Reach Out to You</strong>
+          <span>A support agent will contact you via email or phone within the timeframe below.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sla-banner">
+      <div class="sla-icon">⏱️</div>
+      <div class="sla-text">
+        <strong>Response Time Commitment</strong>
+        <span>Standard support: within 3 business days &nbsp;|&nbsp; Premium customers: within 8 business hours</span>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="index.html" class="btn-primary">🏠 Back to Home</a>
+      <a href="support.html" class="btn-secondary">📋 Submit Another Request</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Global Grocery, Inc. &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms of Use</a> &nbsp;|&nbsp; <a href="support.html">Support Centre</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Global Grocery — Fresh. Fast. Everywhere.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green:       #1B5E20;
+    --green-mid:   #2E7D32;
+    --green-light: #43A047;
+    --green-pale:  #E8F5E9;
+    --orange:      #E65100;
+    --orange-light:#FF6D00;
+    --gold:        #F9A825;
+    --white:       #FFFFFF;
+    --off-white:   #FAFAF8;
+    --grey-light:  #F4F6F2;
+    --grey-mid:    #9E9E9E;
+    --dark:        #1A1A1A;
+    --text:        #2D2D2D;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── TOP PROMO STRIP ── */
+  .promo-strip {
+    background: var(--green);
+    color: white;
+    text-align: center;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .promo-strip span { color: var(--gold); font-weight: 700; }
+
+  /* ── HEADER ── */
+  header {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+  .header-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 68px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .logo-mark {
+    width: 42px;
+    height: 42px;
+    background: var(--green);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--green);
+    line-height: 1;
+  }
+  .logo-text span { color: var(--orange); }
+
+  .search-bar {
+    flex: 1;
+    max-width: 520px;
+    display: flex;
+    border: 2px solid var(--green-light);
+    border-radius: 50px;
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .search-bar:focus-within { box-shadow: 0 0 0 3px rgba(67,160,71,0.2); }
+  .search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    background: white;
+  }
+  .search-bar button {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background .2s;
+  }
+  .search-bar button:hover { background: var(--green-mid); }
+
+  nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 7px 13px;
+    border-radius: 8px;
+    transition: background .2s, color .2s;
+    white-space: nowrap;
+  }
+  nav a:hover { background: var(--green-pale); color: var(--green); }
+  nav a.support-btn {
+    background: var(--orange);
+    color: white;
+    font-weight: 600;
+    padding: 8px 16px;
+  }
+  nav a.support-btn:hover { background: var(--orange-light); color: white; }
+  nav a.cart-btn {
+    background: var(--green);
+    color: white;
+    font-weight: 600;
+    padding: 8px 16px;
+  }
+  nav a.cart-btn:hover { background: var(--green-mid); color: white; }
+
+  /* ── CATEGORY NAV ── */
+  .cat-nav {
+    background: var(--green-mid);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cat-nav::-webkit-scrollbar { display: none; }
+  .cat-nav-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+  }
+  .cat-nav a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 14px;
+    white-space: nowrap;
+    transition: color .2s, background .2s;
+    border-radius: 4px;
+  }
+  .cat-nav a:hover { color: white; background: rgba(255,255,255,0.15); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 40%, #388E3C 70%, #1B5E20 100%);
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-content { color: white; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(249,168,37,0.4); }
+  .btn-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 13px 28px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background .2s, border-color .2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.15); border-color: white; }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+  .hero-stat { text-align: left; }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+  .hero-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .hero-card {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 20px;
+    color: white;
+    transition: transform .3s;
+  }
+  .hero-card:hover { transform: translateY(-4px); }
+  .hero-card:first-child { grid-column: span 2; }
+  .hero-card-icon { font-size: 28px; margin-bottom: 10px; }
+  .hero-card-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .hero-card-desc { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .hero-card-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-top: 8px;
+  }
+  .hero-card-badge {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+
+  /* ── FEATURE BANNERS ── */
+  .features {
+    background: var(--green);
+    padding: 16px 24px;
+  }
+  .features-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    padding: 8px 20px;
+    border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .feature-item:last-child { border-right: none; }
+  .feature-icon { font-size: 22px; flex-shrink: 0; }
+  .feature-text strong { display: block; font-size: 13px; font-weight: 700; }
+  .feature-text span { font-size: 12px; color: rgba(255,255,255,0.75); }
+
+  /* ── SECTIONS ── */
+  section { max-width: 1300px; margin: 0 auto; padding: 56px 24px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+  .section-title span { color: var(--green-mid); }
+  .section-link {
+    color: var(--green-mid);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .section-link:hover { color: var(--green); }
+
+  /* ── DEPARTMENTS ── */
+  .departments-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+  }
+  .dept-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform .25s, box-shadow .25s;
+    border: 1px solid #E8EDE8;
+  }
+  .dept-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,94,32,0.12); }
+  .dept-icon { font-size: 36px; margin-bottom: 10px; }
+  .dept-name { font-size: 13px; font-weight: 600; color: var(--dark); }
+  .dept-count { font-size: 11px; color: var(--grey-mid); margin-top: 3px; }
+
+  /* ── DEALS ── */
+  .deals-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .product-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #EBEBEB;
+    transition: transform .25s, box-shadow .25s;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    display: block;
+  }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+  .product-img {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    position: relative;
+  }
+  .product-badge-sale {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--orange);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+  .product-badge-new {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--green);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+  .product-info { padding: 16px; }
+  .product-category { font-size: 11px; color: var(--grey-mid); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .product-name { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+  .product-pricing { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .product-price { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--green); }
+  .product-old-price { font-size: 13px; color: var(--grey-mid); text-decoration: line-through; }
+  .product-rating { font-size: 12px; color: var(--grey-mid); }
+  .product-rating span { color: var(--gold); }
+  .btn-add {
+    width: 100%;
+    background: var(--green-pale);
+    color: var(--green);
+    border: 2px solid var(--green-light);
+    padding: 9px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .btn-add:hover { background: var(--green); color: white; }
+
+  /* ── BANNER ── */
+  .promo-banners {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px 56px;
+  }
+  .promo-banner {
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .promo-banner-main { background: linear-gradient(135deg, #E65100, #FF8F00); }
+  .promo-banner-side { background: linear-gradient(135deg, #1B5E20, #43A047); }
+  .promo-banner::before {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .promo-banner-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 8px; }
+  .promo-banner-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; margin-bottom: 8px; line-height: 1.1; }
+  .promo-banner-side .promo-banner-title { font-size: 26px; }
+  .promo-banner-sub { font-size: 14px; opacity: 0.85; margin-bottom: 20px; }
+  .promo-banner-btn {
+    display: inline-block;
+    background: white;
+    color: var(--dark);
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    width: fit-content;
+    transition: transform .2s;
+  }
+  .promo-banner-btn:hover { transform: scale(1.05); }
+  .promo-banner-icon {
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    font-size: 80px;
+    opacity: 0.25;
+  }
+  .promo-banner-side .promo-banner-icon { font-size: 60px; }
+
+  /* ── SUPPORT CTA ── */
+  .support-cta {
+    background: linear-gradient(135deg, #0D2B45, #1565C0);
+    padding: 60px 24px;
+    text-align: center;
+    color: white;
+  }
+  .support-cta-inner { max-width: 700px; margin: 0 auto; }
+  .support-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .support-cta p { font-size: 17px; opacity: 0.85; margin-bottom: 32px; line-height: 1.6; }
+  .support-options {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .support-opt {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 14px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 150px;
+    text-decoration: none;
+    color: white;
+    transition: background .2s;
+  }
+  .support-opt:hover { background: rgba(255,255,255,0.2); }
+  .support-opt-icon { font-size: 28px; margin-bottom: 6px; }
+  .support-opt-label { font-size: 13px; font-weight: 600; }
+  .btn-support-main {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-support-main:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(249,168,37,0.4); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0D1F0D;
+    color: white;
+    padding: 56px 24px 24px;
+  }
+  .footer-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 24px;
+  }
+  .footer-brand .logo-text { font-size: 26px; margin-top: 12px; margin-bottom: 14px; }
+  .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; gap: 10px; }
+  .social-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .social-btn:hover { background: var(--green-mid); }
+  .footer-col h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; color: rgba(255,255,255,0.9); }
+  .footer-col a {
+    display: block;
+    text-decoration: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    margin-bottom: 10px;
+    transition: color .2s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content { animation: fadeUp .7s ease forwards; }
+  .hero-visual  { animation: fadeUp .7s .15s ease both; }
+
+  @media (max-width: 1024px) {
+    .departments-grid { grid-template-columns: repeat(4, 1fr); }
+    .deals-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-title { font-size: 36px; }
+    .features-inner { grid-template-columns: 1fr 1fr; }
+    .departments-grid { grid-template-columns: repeat(3, 1fr); }
+    .deals-grid { grid-template-columns: 1fr 1fr; }
+    .promo-banners { grid-template-columns: 1fr; }
+    nav a:not(.support-btn):not(.cart-btn) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PROMO STRIP -->
+<div class="promo-strip">
+  🌍 Delivering freshness across <span>50+ countries</span> — Free delivery on orders over $50 &nbsp;|&nbsp; 🛒 New customers get <span>15% off</span> first order with code <span>FRESH15</span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">🛒</div>
+      <div class="logo-text">Global<span>Grocery</span></div>
+    </a>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products, brands, categories..."/>
+      <button>🔍</button>
+    </div>
+    <nav>
+      <a href="#">Departments</a>
+      <a href="#">Deals</a>
+      <a href="#">Fresh</a>
+      <a href="#">Pharmacy</a>
+      <a href="support.html" class="support-btn">📞 Support</a>
+      <a href="#" class="cart-btn">🛒 Cart (0)</a>
+    </nav>
+  </div>
+</header>
+
+<!-- CATEGORY NAV -->
+<div class="cat-nav">
+  <div class="cat-nav-inner">
+    <a href="#">🥩 Meat & Seafood</a>
+    <a href="#">🥦 Fresh Produce</a>
+    <a href="#">🥛 Dairy & Eggs</a>
+    <a href="#">🍞 Bakery</a>
+    <a href="#">🥫 Pantry & Canned</a>
+    <a href="#">🧃 Beverages</a>
+    <a href="#">🧹 Household</a>
+    <a href="#">💊 Health & Beauty</a>
+    <a href="#">🍭 Snacks & Candy</a>
+    <a href="#">🌿 Organic</a>
+    <a href="#">❄️ Frozen Foods</a>
+    <a href="#">🐾 Pet Supplies</a>
+    <a href="#">👶 Baby</a>
+    <a href="#">🔌 Electronics</a>
+    <a href="#">👕 Clothing</a>
+    <a href="#">🏠 Home & Garden</a>
+    <a href="#">🚗 Auto</a>
+    <a href="#">📦 Bulk Deals</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">🌟 Weekly Specials Now Live</div>
+      <h1 class="hero-title">
+        Fresh Food.<br/>
+        <span>Global Reach.</span><br/>
+        Every Day.
+      </h1>
+      <p class="hero-sub">
+        From your local farm to your family's table — Global Grocery delivers the freshest produce, quality meats, pantry staples and everything in between, shipped to your door anywhere in the world.
+      </p>
+      <div class="hero-actions">
+        <a href="#shop" class="btn-primary">Shop Now →</a>
+        <a href="#departments" class="btn-outline">Browse Departments</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">50M+</div>
+          <div class="hero-stat-label">Customers Served</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">150K+</div>
+          <div class="hero-stat-label">Products Available</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">50+</div>
+          <div class="hero-stat-label">Countries</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4.8★</div>
+          <div class="hero-stat-label">Customer Rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-icon">🥩</div>
+        <div class="hero-card-title">Premium Wagyu Beef — Weekend Special</div>
+        <div class="hero-card-desc">Grade A5 Wagyu, sourced directly from certified farms. Limited weekly stock.</div>
+        <div class="hero-card-price">$28.99 / lb</div>
+        <div class="hero-card-badge">Save 20%</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">🥦</div>
+        <div class="hero-card-title">Organic Box</div>
+        <div class="hero-card-desc">Weekly farm-fresh organic vegetables, curated by region.</div>
+        <div class="hero-card-price">$34.99</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">🧃</div>
+        <div class="hero-card-title">Beverage Bundle</div>
+        <div class="hero-card-desc">24-pack assorted juices and sparkling water.</div>
+        <div class="hero-card-price">$19.99</div>
+        <div class="hero-card-badge">NEW</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES BAR -->
+<div class="features">
+  <div class="features-inner">
+    <div class="feature-item"><div class="feature-icon">🚚</div><div class="feature-text"><strong>Free Delivery</strong><span>On orders over $50</span></div></div>
+    <div class="feature-item"><div class="feature-icon">🌡️</div><div class="feature-text"><strong>Cold Chain Guaranteed</strong><span>Fresh on arrival, every time</span></div></div>
+    <div class="feature-item"><div class="feature-icon">↩️</div><div class="feature-text"><strong>Easy Returns</strong><span>30-day hassle-free policy</span></div></div>
+    <div class="feature-item"><div class="feature-icon">🔒</div><div class="feature-text"><strong>Secure Checkout</strong><span>256-bit SSL encryption</span></div></div>
+  </div>
+</div>
+
+<!-- DEPARTMENTS -->
+<section id="departments">
+  <div class="section-header">
+    <h2 class="section-title">Shop by <span>Department</span></h2>
+    <a href="#" class="section-link">All Departments →</a>
+  </div>
+  <div class="departments-grid">
+    <a href="#" class="dept-card"><div class="dept-icon">🥩</div><div class="dept-name">Meat & Seafood</div><div class="dept-count">4,200+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🥦</div><div class="dept-name">Fresh Produce</div><div class="dept-count">3,100+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🥛</div><div class="dept-name">Dairy & Eggs</div><div class="dept-count">1,800+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🍞</div><div class="dept-name">Bakery</div><div class="dept-count">900+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🥫</div><div class="dept-name">Pantry & Canned</div><div class="dept-count">8,500+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🧃</div><div class="dept-name">Beverages</div><div class="dept-count">2,400+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">❄️</div><div class="dept-name">Frozen Foods</div><div class="dept-count">3,700+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">💊</div><div class="dept-name">Health & Beauty</div><div class="dept-count">12,000+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🧹</div><div class="dept-name">Household</div><div class="dept-count">6,200+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🔌</div><div class="dept-name">Electronics</div><div class="dept-count">15,000+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">👕</div><div class="dept-name">Clothing</div><div class="dept-count">22,000+ items</div></a>
+    <a href="#" class="dept-card"><div class="dept-icon">🐾</div><div class="dept-name">Pet Supplies</div><div class="dept-count">5,100+ items</div></a>
+  </div>
+</section>
+
+<!-- DEALS -->
+<section id="shop">
+  <div class="section-header">
+    <h2 class="section-title">Today's <span>Best Deals</span></h2>
+    <a href="#" class="section-link">View All Deals →</a>
+  </div>
+  <div class="deals-grid">
+    <a href="#" class="product-card">
+      <div class="product-img" style="background:#FFF3E0;"><span>🍓</span><div class="product-badge-sale">SAVE 30%</div></div>
+      <div class="product-info">
+        <div class="product-category">Fresh Produce</div>
+        <div class="product-name">Organic Strawberries — 2 lb Pack</div>
+        <div class="product-pricing"><span class="product-price">$4.99</span><span class="product-old-price">$6.99</span></div>
+        <div class="product-rating"><span>★★★★★</span> 4.9 (2,841)</div>
+        <button class="btn-add">+ Add to Cart</button>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img" style="background:#E8F5E9;"><span>🥑</span><div class="product-badge-new">NEW</div></div>
+      <div class="product-info">
+        <div class="product-category">Fresh Produce</div>
+        <div class="product-name">Hass Avocados — Pack of 6</div>
+        <div class="product-pricing"><span class="product-price">$5.49</span></div>
+        <div class="product-rating"><span>★★★★☆</span> 4.6 (1,204)</div>
+        <button class="btn-add">+ Add to Cart</button>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img" style="background:#E3F2FD;"><span>🥩</span><div class="product-badge-sale">SAVE 15%</div></div>
+      <div class="product-info">
+        <div class="product-category">Meat & Seafood</div>
+        <div class="product-name">Angus Ground Beef 93/7 — 3 lb</div>
+        <div class="product-pricing"><span class="product-price">$12.98</span><span class="product-old-price">$15.28</span></div>
+        <div class="product-rating"><span>★★★★★</span> 4.8 (4,502)</div>
+        <button class="btn-add">+ Add to Cart</button>
+      </div>
+    </a>
+    <a href="#" class="product-card">
+      <div class="product-img" style="background:#FFF8E1;"><span>🧈</span></div>
+      <div class="product-info">
+        <div class="product-category">Dairy & Eggs</div>
+        <div class="product-name">Kerrygold Pure Irish Butter — 2 Pack</div>
+        <div class="product-pricing"><span class="product-price">$7.49</span></div>
+        <div class="product-rating"><span>★★★★★</span> 4.9 (8,771)</div>
+        <button class="btn-add">+ Add to Cart</button>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- PROMO BANNERS -->
+<div class="promo-banners">
+  <div class="promo-banner promo-banner-main">
+    <div class="promo-banner-label">Limited Time Offer</div>
+    <div class="promo-banner-title">Rollback Prices<br/>This Weekend Only</div>
+    <div class="promo-banner-sub">Thousands of products at the lowest prices of the year. No membership needed.</div>
+    <a href="#" class="promo-banner-btn">Shop Rollbacks →</a>
+    <div class="promo-banner-icon">🏷️</div>
+  </div>
+  <div class="promo-banner promo-banner-side">
+    <div class="promo-banner-label">Premium Members</div>
+    <div class="promo-banner-title">Same-Day<br/>Delivery</div>
+    <div class="promo-banner-sub">Order before 2pm, get it today.</div>
+    <a href="#" class="promo-banner-btn">Join Now →</a>
+    <div class="promo-banner-icon">⚡</div>
+  </div>
+</div>
+
+<!-- SUPPORT CTA -->
+<div class="support-cta">
+  <div class="support-cta-inner">
+    <h2>How Can We Help You Today?</h2>
+    <p>Our support team is available 24/7 to assist with orders, deliveries, returns and anything else you need. Choose the option that works best for you.</p>
+    <div class="support-options">
+      <a href="support.html" class="support-opt">
+        <div class="support-opt-icon">📋</div>
+        <div class="support-opt-label">Submit a Request</div>
+      </a>
+      <a href="#" class="support-opt">
+        <div class="support-opt-icon">💬</div>
+        <div class="support-opt-label">Live Chat</div>
+      </a>
+      <a href="#" class="support-opt">
+        <div class="support-opt-icon">📧</div>
+        <div class="support-opt-label">Email Support</div>
+      </a>
+      <a href="#" class="support-opt">
+        <div class="support-opt-icon">📞</div>
+        <div class="support-opt-label">Call Us</div>
+      </a>
+    </div>
+    <a href="support.html" class="btn-support-main">Submit a Support Request →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo" style="text-decoration:none;">
+        <div class="logo-mark">🛒</div>
+      </div>
+      <div class="logo-text" style="font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#43A047;margin:12px 0 14px;">Global<span style="color:#E65100;">Grocery</span></div>
+      <p>Fresh. Fast. Everywhere. Delivering quality groceries and essentials to families across 50+ countries since 2008.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">📘</a>
+        <a href="#" class="social-btn">📸</a>
+        <a href="#" class="social-btn">🐦</a>
+        <a href="#" class="social-btn">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="#">Weekly Deals</a>
+      <a href="#">Fresh Produce</a>
+      <a href="#">Meat & Seafood</a>
+      <a href="#">Organic Range</a>
+      <a href="#">Bulk Buy</a>
+      <a href="#">New Arrivals</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#">Same-Day Delivery</a>
+      <a href="#">Store Pickup</a>
+      <a href="#">Pharmacy</a>
+      <a href="#">Optical</a>
+      <a href="#">Gift Cards</a>
+      <a href="#">Membership</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="support.html">Submit a Request</a>
+      <a href="#">Track Your Order</a>
+      <a href="#">Returns & Refunds</a>
+      <a href="#">FAQs</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Press Room</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Investor Relations</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Global Grocery, Inc. All rights reserved.</span>
+    <span>🌍 Delivering freshness to 50+ countries worldwide</span>
+  </div>
+</footer>
+
+</body>
+</html>
