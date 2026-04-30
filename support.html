@@ -1,45 +1,690 @@
-<!--  ----------------------------------------------------------------------  -->
-<!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
-<!--  If necessary, please modify the charset parameter to specify the        -->
-<!--  character set of your HTML page.                                        -->
-<!--  ----------------------------------------------------------------------  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a Support Request — Global Grocery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --navy-mid: #1a2e45;
+      --blue: #003f88;
+      --green: #2e7d32;
+      --green-light: #43a047;
+      --green-bright: #4caf50;
+      --yellow: #ffc107;
+      --white: #ffffff;
+      --light-bg: #f4f6f9;
+      --border: #dde3ec;
+      --text: #1a1a2e;
+      --text-muted: #5a6478;
+      --red: #c62828;
+    }
 
-<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<!--  ----------------------------------------------------------------------  -->
-<!--  NOTE: Please add the following <FORM> element to your page.             -->
-<!--  ----------------------------------------------------------------------  -->
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--light-bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-<form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DgL00000Q2uqL" method="POST">
+    /* ── HEADER ── */
+    .top-bar {
+      background: var(--navy);
+      color: rgba(255,255,255,0.82);
+      font-size: 0.78rem;
+      text-align: center;
+      padding: 7px 20px;
+      letter-spacing: 0.02em;
+    }
+    .top-bar span { color: var(--yellow); font-weight: 600; }
 
-<input type=hidden name="orgid" value="00DgL00000Q2uqL">
-<input type=hidden name="retURL" value="https://azeem-idris.github.io/global-grocery/thankyou.html">
+    header {
+      background: var(--navy-mid);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-<!--  ----------------------------------------------------------------------  -->
-<!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
-<!--  these lines if you wish to test in debug mode.                          -->
-<!--  <input type="hidden" name="debug" value=1>                              -->
-<!--  <input type="hidden" name="debugEmail"                                  -->
-<!--  value="omofolahan.19@gmail.com">                                        -->
-<!--  ----------------------------------------------------------------------  -->
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      background: var(--green-bright);
+      color: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(76,175,80,0.4);
+    }
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .logo-text span { color: var(--green-bright); }
 
-<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--green-bright); }
+    nav a.active { color: var(--yellow); font-weight: 700; }
 
-<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
+    .nav-cart {
+      background: var(--green);
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .nav-cart:hover { background: var(--green-light) !important; color: #fff !important; }
 
-<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 40px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .breadcrumb a { color: var(--blue); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
 
-<label for="subject">Subject</label><input  id="subject" maxlength="80" name="subject" size="20" type="text" /><br>
+    /* ── HERO ── */
+    .support-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 52px 40px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .support-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(76,175,80,0.08);
+    }
+    .support-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,193,7,0.06);
+    }
+    .support-hero .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(76,175,80,0.18);
+      border: 1px solid rgba(76,175,80,0.35);
+      color: var(--green-bright);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .support-hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .support-hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.78);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
 
-<label for="description">Description</label><textarea name="description"></textarea><br>
+    /* ── QUICK HELP STRIP ── */
+    .quick-help {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px 40px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .quick-help-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--light-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--blue);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .quick-help-item:hover {
+      background: var(--blue);
+      color: var(--white);
+      border-color: var(--blue);
+    }
+    .quick-help-item .icon { font-size: 1.1rem; }
 
-<label for="priority">Priority</label><select  id="priority" name="priority"><option value="">--None--</option><option value="High">High</option>
-<option value="Medium">Medium</option>
-<option value="Low">Low</option>
-</select><br>
+    /* ── MAIN LAYOUT ── */
+    .main-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 28px;
+      align-items: start;
+    }
 
-<input type="hidden"  id="external" name="external" value="1" /><br>
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .form-card-header {
+      background: linear-gradient(90deg, var(--green) 0%, var(--green-light) 100%);
+      padding: 22px 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .form-card-header .hicon {
+      background: rgba(255,255,255,0.2);
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .form-card-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .form-card-header p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.82);
+      margin-top: 2px;
+    }
 
-<input type="submit" name="submit">
+    .form-body { padding: 32px; }
 
-</form>
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    label .req { color: var(--red); font-size: 0.9rem; }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      background: #fafbfd;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+      background: var(--white);
+    }
+    input[type="text"]::placeholder,
+    textarea::placeholder { color: #aab0be; }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    select { cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6478' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .priority-hint {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .priority-tag {
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .priority-tag.high { background: #fdecea; color: var(--red); border: 1px solid #f5c6c2; }
+    .priority-tag.medium { background: #fff8e1; color: #e65100; border: 1px solid #ffe0b2; }
+    .priority-tag.low { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 9px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(46,125,50,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(46,125,50,0.4);
+    }
+    .submit-btn:active { transform: translateY(0); }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+    .info-card {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+    .info-card-header {
+      background: var(--navy-mid);
+      padding: 14px 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-card-body { padding: 20px; }
+
+    .contact-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-option:last-child { border-bottom: none; padding-bottom: 0; }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--light-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .contact-info strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .contact-info span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .sla-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sla-item:last-child { border-bottom: none; }
+    .sla-label { font-size: 0.84rem; color: var(--text-muted); }
+    .sla-value {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--green);
+      background: #e8f5e9;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .tip-box {
+      background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
+      border-radius: 10px;
+      border: 1px solid #c8e6c9;
+      padding: 16px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .tip-box strong { color: var(--green); display: block; margin-bottom: 6px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 28px 40px;
+      font-size: 0.82rem;
+      margin-top: 60px;
+    }
+    footer .footer-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    footer .footer-logo span { color: var(--green-bright); }
+    footer .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 12px 0; }
+    footer .footer-links a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+    footer .footer-links a:hover { color: var(--green-bright); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .main-container { grid-template-columns: 1fr; }
+      .sidebar { order: -1; }
+      header { padding: 0 16px; }
+      nav { display: none; }
+      .support-hero h1 { font-size: 1.6rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-body { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    🌍 Delivering freshness across 50+ countries — Free delivery on orders over $50 &nbsp;|&nbsp; 🛒 New customers get <span>15% off</span> first order with code <span>FRESH15</span>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🛒</div>
+      <div class="logo-text">Global<span>Grocery</span></div>
+    </a>
+    <nav>
+      <a href="#">Departments</a>
+      <a href="#">Deals</a>
+      <a href="#">Fresh</a>
+      <a href="#">Pharmacy</a>
+      <a href="support.html" class="active">📞 Support</a>
+      <a href="#" class="nav-cart">🛒 Cart (0)</a>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span>›</span>
+    <a href="#">Help Center</a>
+    <span>›</span>
+    Submit a Request
+  </div>
+
+  <!-- HERO -->
+  <div class="support-hero">
+    <div class="badge">🎧 Support Center</div>
+    <h1>How Can We Help You Today?</h1>
+    <p>Our dedicated support team is available 24/7. Fill in the form below and we'll get back to you as soon as possible.</p>
+  </div>
+
+  <!-- QUICK HELP -->
+  <div class="quick-help">
+    <a href="#" class="quick-help-item"><span class="icon">📦</span> Track My Order</a>
+    <a href="#" class="quick-help-item"><span class="icon">↩️</span> Returns & Refunds</a>
+    <a href="#" class="quick-help-item"><span class="icon">💳</span> Billing Issue</a>
+    <a href="#" class="quick-help-item"><span class="icon">🚚</span> Delivery Problem</a>
+    <a href="#" class="quick-help-item"><span class="icon">❓</span> FAQs</a>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-container">
+
+    <!-- FORM CARD -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="hicon">📋</div>
+        <div>
+          <h2>Submit a Support Request</h2>
+          <p>We typically respond within 2–4 hours</p>
+        </div>
+      </div>
+
+      <div class="form-body">
+        <!-- SALESFORCE WEB-TO-CASE FORM -->
+        <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DgL00000Q2uqL" method="POST">
+          <input type="hidden" name="orgid" value="00DgL00000Q2uqL">
+          <input type="hidden" name="retURL" value="https://azeem-idris.github.io/global-grocery/thankyou.html">
+
+          <!--  Debug fields — uncomment ONLY when testing:
+          <input type="hidden" name="debug" value="1">
+          <input type="hidden" name="debugEmail" value="globalgrocerysupport@gmail.com">
+          -->
+
+          <input type="hidden" id="external" name="external" value="1">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label for="name">Contact Name <span class="req">*</span></label>
+              <input id="name" maxlength="80" name="name" type="text" placeholder="e.g. Jane Smith" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address <span class="req">*</span></label>
+              <input id="email" maxlength="80" name="email" type="text" placeholder="your@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input id="phone" maxlength="40" name="phone" type="text" placeholder="+1 (555) 000-0000">
+            </div>
+
+            <div class="form-group">
+              <label for="priority">Priority <span class="req">*</span></label>
+              <select id="priority" name="priority" required>
+                <option value="">-- Select Priority --</option>
+                <option value="High">🔴 High — Urgent issue</option>
+                <option value="Medium">🟡 Medium — Needs attention</option>
+                <option value="Low">🟢 Low — General enquiry</option>
+              </select>
+              <div class="priority-hint">
+                <span class="priority-tag high">High — order lost / payment failed</span>
+                <span class="priority-tag medium">Medium — delay / wrong item</span>
+                <span class="priority-tag low">Low — question / feedback</span>
+              </div>
+            </div>
+
+            <div class="form-group full">
+              <label for="subject">Subject <span class="req">*</span></label>
+              <input id="subject" maxlength="80" name="subject" type="text" placeholder="Brief description of your issue" required>
+            </div>
+
+            <div class="form-group full">
+              <label for="description">Description <span class="req">*</span></label>
+              <textarea name="description" id="description" placeholder="Please describe your issue in as much detail as possible — include order numbers, product names, or any relevant information." required></textarea>
+            </div>
+
+          </div><!-- /form-grid -->
+
+          <button type="submit" class="submit-btn">
+            📨 &nbsp;Submit Support Request
+          </button>
+
+          <p class="form-note">
+            🔒 Your information is secure and encrypted. &nbsp;·&nbsp; We'll respond within 2–4 hours.
+          </p>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- Contact Options -->
+      <div class="info-card">
+        <div class="info-card-header">📞 Other Ways to Reach Us</div>
+        <div class="info-card-body">
+          <div class="contact-option">
+            <div class="contact-icon">💬</div>
+            <div class="contact-info">
+              <strong>Live Chat</strong>
+              <span>Available 24/7 — fastest response</span>
+            </div>
+          </div>
+          <div class="contact-option">
+            <div class="contact-icon">📧</div>
+            <div class="contact-info">
+              <strong>Email Support</strong>
+              <span>globalgrocerysupport@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-option">
+            <div class="contact-icon">📞</div>
+            <div class="contact-info">
+              <strong>Call Us</strong>
+              <span>1-800-GROCERY · Mon–Sun 6am–11pm</span>
+            </div>
+          </div>
+          <div class="contact-option">
+            <div class="contact-icon">🏪</div>
+            <div class="contact-info">
+              <strong>Find a Store</strong>
+              <span>Locate your nearest Global Grocery</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Response Times -->
+      <div class="info-card">
+        <div class="info-card-header">⏱️ Response Time Guarantee</div>
+        <div class="info-card-body">
+          <div class="sla-item">
+            <span class="sla-label">🔴 High Priority</span>
+            <span class="sla-value">Under 1 hr</span>
+          </div>
+          <div class="sla-item">
+            <span class="sla-label">🟡 Medium Priority</span>
+            <span class="sla-value">2–4 hrs</span>
+          </div>
+          <div class="sla-item">
+            <span class="sla-label">🟢 Low Priority</span>
+            <span class="sla-value">24 hrs</span>
+          </div>
+          <div class="sla-item">
+            <span class="sla-label">📧 Email</span>
+            <span class="sla-value">Under 2 hrs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip Box -->
+      <div class="tip-box">
+        <strong>💡 Tip — Speed up your resolution</strong>
+        Include your <strong>order number</strong> (found in your confirmation email), the <strong>product name</strong>, and any photos if relevant. This helps our team resolve your case faster — no back-and-forth needed!
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Global<span>Grocery</span></div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Accessibility</a>
+      <a href="#">Careers</a>
+      <a href="#">About Us</a>
+      <a href="support.html">Support</a>
+    </div>
+    <p>© 2026 Global Grocery, Inc. All rights reserved. · 🌍 Delivering freshness to 50+ countries worldwide</p>
+  </footer>
+
+</body>
+</html>
